@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { menuCategories } from "@/data/menuData";
-import { ChefHat, Users } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { menuCategories, MenuItem } from "@/data/menuData";
+import { ChefHat, Users, Eye } from "lucide-react";
+import ItemPreviewDialog from "./ItemPreviewDialog";
 
 interface MenuBuilderProps {
   selectedItems: string[];
@@ -24,6 +24,34 @@ const MenuBuilder = ({
   onProceedToBooking,
 }: MenuBuilderProps) => {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [previewItem, setPreviewItem] = useState<MenuItem | null>(null);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+  // Get all items flattened for navigation
+  const allItems = menuCategories.flatMap(category => category.items);
+
+  const handlePreviewItem = (item: MenuItem) => {
+    setPreviewItem(item);
+    setIsPreviewOpen(true);
+  };
+
+  const handleNextItem = () => {
+    if (!previewItem) return;
+    const currentIndex = allItems.findIndex(item => item.id === previewItem.id);
+    const nextIndex = (currentIndex + 1) % allItems.length;
+    setPreviewItem(allItems[nextIndex]);
+  };
+
+  const handlePreviousItem = () => {
+    if (!previewItem) return;
+    const currentIndex = allItems.findIndex(item => item.id === previewItem.id);
+    const previousIndex = currentIndex === 0 ? allItems.length - 1 : currentIndex - 1;
+    setPreviewItem(allItems[previousIndex]);
+  };
+
+  const getItemImage = (itemId: string) => {
+    return `https://api.dicebear.com/7.x/shapes/svg?seed=${itemId}&backgroundColor=f5efe7`;
+  };
 
   return (
     <section id="menu-builder" className="py-16 px-4 bg-background">
@@ -112,20 +140,55 @@ const MenuBuilder = ({
                     {category.items.map((item) => (
                       <div
                         key={item.id}
-                        className="flex items-center space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors"
+                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors border border-transparent hover:border-primary/20"
                       >
                         <Checkbox
                           id={item.id}
                           checked={selectedItems.includes(item.id)}
                           onCheckedChange={() => onToggleItem(item.id)}
-                          className="border-primary data-[state=checked]:bg-primary"
+                          className="border-primary data-[state=checked]:bg-primary flex-shrink-0"
                         />
-                        <Label
-                          htmlFor={item.id}
-                          className="text-base cursor-pointer flex-1"
+                        
+                        {/* Item Image */}
+                        <button
+                          onClick={() => handlePreviewItem(item)}
+                          className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 border-2 border-muted hover:border-primary transition-colors"
                         >
-                          {item.name}
-                        </Label>
+                          <img
+                            src={getItemImage(item.id)}
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </button>
+
+                        <div className="flex-1 min-w-0">
+                          <Label
+                            htmlFor={item.id}
+                            className="text-base cursor-pointer block truncate"
+                          >
+                            {item.name}
+                          </Label>
+                        </div>
+
+                        {/* Veg/Non-Veg Icon */}
+                        {item.isVeg ? (
+                          <div className="w-4 h-4 border-2 border-green-600 flex items-center justify-center flex-shrink-0">
+                            <div className="w-2 h-2 rounded-full bg-green-600"></div>
+                          </div>
+                        ) : (
+                          <div className="w-4 h-4 border-2 border-red-600 flex items-center justify-center flex-shrink-0">
+                            <div className="w-2 h-2 rounded-full bg-red-600"></div>
+                          </div>
+                        )}
+
+                        {/* Preview Icon */}
+                        <button
+                          onClick={() => handlePreviewItem(item)}
+                          className="flex-shrink-0 p-1 hover:bg-primary/10 rounded transition-colors"
+                          title="Preview item"
+                        >
+                          <Eye className="h-4 w-4 text-primary" />
+                        </button>
                       </div>
                     ))}
                   </div>
@@ -160,6 +223,17 @@ const MenuBuilder = ({
             </CardContent>
           </Card>
         )}
+
+        {/* Preview Dialog */}
+        <ItemPreviewDialog
+          item={previewItem}
+          isOpen={isPreviewOpen}
+          onClose={() => setIsPreviewOpen(false)}
+          onNext={handleNextItem}
+          onPrevious={handlePreviousItem}
+          isSelected={previewItem ? selectedItems.includes(previewItem.id) : false}
+          onToggleSelect={() => previewItem && onToggleItem(previewItem.id)}
+        />
       </div>
     </section>
   );

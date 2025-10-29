@@ -18,7 +18,7 @@ const Hero = () => {
           alt="Delicious catering spread"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-background/95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-[hsl(335_70%_20%)]" />
       </div>
 
       {/* Decorative Pattern Overlay */}
