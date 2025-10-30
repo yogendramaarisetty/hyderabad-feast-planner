@@ -1,54 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Modern Design System - Elegant & Intuitive */
 
 @layer base {
   :root {
-    --background: 35 35% 96%;
-    --foreground: 335 65% 15%;
+    /* Modern neutral background */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 335 65% 15%;
+    --card-foreground: 0 0% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 335 65% 15%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 335 65% 30%;
-    --primary-foreground: 35 35% 96%;
-    --primary-dark: 335 70% 20%;
+    /* Sophisticated primary color - Deep burgundy */
+    --primary: 340 75% 25%;
+    --primary-foreground: 0 0% 98%;
+    --primary-light: 340 60% 35%;
+    --primary-dark: 340 85% 15%;
 
-    --secondary: 330 60% 55%;
-    --secondary-foreground: 0 0% 100%;
+    /* Elegant secondary - Warm gold */
+    --secondary: 45 85% 55%;
+    --secondary-foreground: 0 0% 9%;
+    --secondary-light: 45 70% 65%;
+    --secondary-dark: 45 90% 45%;
 
-    --muted: 35 25% 90%;
-    --muted-foreground: 335 25% 40%;
+    /* Refined muted tones */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 80 40% 45%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Rich emerald */
+    --accent: 160 60% 40%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 35 20% 85%;
-    --input: 35 20% 85%;
-    --ring: 335 65% 30%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 340 75% 25%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(335 65% 30%), hsl(330 60% 40%));
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(35 35% 98%));
+    /* Custom elegant colors */
+    --burgundy: 340 75% 25%;
+    --gold: 45 85% 55%;
+    --emerald: 160 60% 40%;
+    --cream: 30 20% 97%;
+    --charcoal: 0 0% 15%;
+
+    /* Modern gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(340 75% 25%), hsl(340 60% 35%));
+    --gradient-secondary: linear-gradient(135deg, hsl(45 85% 55%), hsl(45 70% 65%));
+    --gradient-accent: linear-gradient(135deg, hsl(160 60% 40%), hsl(160 50% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(340 75% 25%) 0%, hsl(45 85% 55%) 50%, hsl(160 60% 40%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(30 20% 97%));
+    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
     
-    /* Shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(335 65% 30% / 0.2);
-    --shadow-card: 0 4px 16px hsl(335 30% 20% / 0.1);
+    /* Sophisticated shadows */
+    --shadow-elegant: 0 20px 40px -12px hsl(340 75% 25% / 0.15);
+    --shadow-card: 0 8px 32px hsl(0 0% 0% / 0.08);
+    --shadow-soft: 0 4px 16px hsl(0 0% 0% / 0.04);
+    --shadow-glow: 0 0 20px hsl(340 75% 25% / 0.2);
     
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Smooth animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 

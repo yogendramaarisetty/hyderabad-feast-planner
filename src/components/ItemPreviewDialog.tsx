@@ -25,8 +25,8 @@ const ItemPreviewDialog = ({
 }: ItemPreviewDialogProps) => {
   if (!item) return null;
 
-  const getItemImage = (itemId: string) => {
-    return `https://api.dicebear.com/7.x/shapes/svg?seed=${itemId}&backgroundColor=f5efe7`;
+  const getItemImage = (item: MenuItem) => {
+    return item.image || `https://api.dicebear.com/7.x/shapes/svg?seed=${item.id}&backgroundColor=f5efe7`;
   };
 
   return (
@@ -64,9 +64,9 @@ const ItemPreviewDialog = ({
           {/* Image */}
           <div className="aspect-video bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center">
             <img
-              src={getItemImage(item.id)}
+              src={getItemImage(item)}
               alt={item.name}
-              className="w-full h-full object-contain p-8"
+              className="w-full h-full object-cover"
             />
           </div>
 
@@ -101,6 +101,13 @@ const ItemPreviewDialog = ({
                   Select Item
                 </label>
               </div>
+            </div>
+
+            {/* Description */}
+            <div className="mb-4">
+              <p className="text-base text-foreground leading-relaxed">
+                {item.description}
+              </p>
             </div>
 
             <div className="text-sm text-muted-foreground">
